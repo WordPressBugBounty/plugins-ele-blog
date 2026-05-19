@@ -426,7 +426,7 @@ class Ele_Blog_Style_Three extends Widget_Base {
     $this->add_control(
         'important_note',
         [
-            'label' => __( '', 'ele-blog' ),
+            'label' => '',
             'type' => \Elementor\Controls_Manager::RAW_HTML,
             'raw' => '
             <a target="_blank" href="https://1.envato.market/ele-blog">Go Pro</a>

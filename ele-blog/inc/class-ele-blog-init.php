@@ -4,6 +4,10 @@
  * @sicne 1.0.0
  * */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'Ele_Blog_Init' ) ) {
 
 	class Ele_Blog_Init {

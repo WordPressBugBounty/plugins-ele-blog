@@ -51,7 +51,7 @@ if (!function_exists('ele_blog_post_tag')) :
 endif;
 
 if (!function_exists('eleblog_get_cat_slug')) :
-  // caategory slug
+  // category slug
   function eleblog_get_cat_slug($cat_id)
   {
     $cat_id   = (int) $cat_id;
@@ -66,7 +66,7 @@ if (!function_exists('eleblog_get_cat_slug')) :
 endif;
 
 if (!function_exists('eleblog_select_post')) :
-  //select post 
+  //select post
   function eleblog_select_post()
   {
 
@@ -86,9 +86,9 @@ if (!function_exists('eleblog_select_post')) :
 
 endif;
 
-if (!function_exists('elegblog_get_template')) {
+if (!function_exists('eleblog_get_template')) {
 
-  function elegblog_get_template($style = 'style-one')
+  function eleblog_get_template($style = 'style-one')
   {
     include ELE_BLOG_ELEMENTOR . '/templates/' . $style . '.php';
   }
@@ -96,7 +96,7 @@ if (!function_exists('elegblog_get_template')) {
 
 
 $eleblog_installation_date = get_option('eleblog_active_date');
-$eleblog_today_date = date('Y-m-d h:i:s');
+$eleblog_today_date = gmdate('Y-m-d H:i:s');
 
 $eleblog_install_date = new DateTime($eleblog_installation_date);
 $eleblog_current_date = new DateTime($eleblog_today_date);
@@ -114,17 +114,20 @@ if (isset($eleblog_diff_days) && $eleblog_diff_days >= 3) {
 function ele_blog_notice()
 {
   $user_id = get_current_user_id();
-  if (!get_user_meta($user_id, 'ele_blog_notice_dismissed'))
-    echo '<div class="notice-warning notice"><a style="text-decoration:none;float:right;padding-top:5px;" href="?ele_blog-dismissed">Dismiss</a><p>Dear Eleblog user, Thank you for using Eleblog plugin. We expect a  rating from you.</p> Please <a href="https://wordpress.org/support/plugin/ele-blog/reviews/#new-post">Rate Now! ★★★★★ </a>
+  if (!get_user_meta($user_id, 'ele_blog_notice_dismissed')) {
+    $dismiss_url = wp_nonce_url( add_query_arg( 'ele_blog-dismissed', '1' ), 'eleblog_dismiss_' . $user_id );
+    echo '<div class="notice-warning notice"><a style="text-decoration:none;float:right;padding-top:5px;" href="' . esc_url( $dismiss_url ) . '">Dismiss</a><p>Dear Eleblog user, Thank you for using Eleblog plugin. We expect a  rating from you.</p> Please <a href="https://wordpress.org/support/plugin/ele-blog/reviews/#new-post">Rate Now! &#9733;&#9733;&#9733;&#9733;&#9733; </a>
          <p>Any Question ? Or Need any support related WordPress ? Fell Free To Contact Us at <b>solverwp21@gmail.com</b></p>
       </div>';
+  }
 }
 
 function ele_blog_notice_dismissed()
 {
   $user_id = get_current_user_id();
-  if (isset($_GET['ele_blog-dismissed']))
+  if (isset($_GET['ele_blog-dismissed']) && isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'eleblog_dismiss_' . $user_id)) {
     add_user_meta($user_id, 'ele_blog_notice_dismissed', 'true', true);
+  }
 }
 add_action('admin_init', 'ele_blog_notice_dismissed');
 

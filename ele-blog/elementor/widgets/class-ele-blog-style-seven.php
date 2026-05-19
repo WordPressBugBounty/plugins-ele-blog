@@ -301,7 +301,7 @@ class Ele_Blog_Style_Seven extends Widget_Base {
         $this->add_control(
             'important_note',
             [
-                'label' => __( '', 'ele-blog' ),
+                'label' => '',
                 'type' => \Elementor\Controls_Manager::RAW_HTML,
                 'raw' => '<br/>For More Style And Features Lke Magazine, Ajax pagination and more 13+ addons <br/>
                 <br/><a target="_blank" href="https://1.envato.market/ele-blog">Go Pro</a>
@@ -500,7 +500,7 @@ class Ele_Blog_Style_Seven extends Widget_Base {
         $this->add_control(
             'important_note_two',
             [
-                'label' => __( '', 'ele-blog' ),
+                'label' => '',
                 'type' => \Elementor\Controls_Manager::RAW_HTML,
                 'raw' => '<br/>More style like inactive button color, hover color, typography you\'ll get on <a target="_blank" href="https://1.envato.market/ele-blog">Pro Version</a> <br/>
                 <br/><a target="_blank" href="https://1.envato.market/ele-blog">Go Pro</a>
@@ -563,14 +563,14 @@ class Ele_Blog_Style_Seven extends Widget_Base {
                        foreach ( $settings['select_cat'] as $term ) :
                     ?>
                     
-                    <button class="button" data-filter=".<?php echo strtolower(preg_replace('/[^a-zA-Z]+/', '-', eleblog_get_cat_slug( $term ) ) ); ?>"><?php echo get_cat_name( $term ); ?></button>
+                    <button class="button" data-filter=".<?php echo esc_attr( strtolower(preg_replace('/[^a-zA-Z]+/', '-', eleblog_get_cat_slug( $term ) ) ) ); ?>"><?php echo esc_html( get_cat_name( $term ) ); ?></button>
                     <?php endforeach;
                     else: 
                         $taxonomy = 'category';
                         $terms = get_terms($taxonomy); // Get all terms of a taxonomy
                         if ( $terms && !is_wp_error( $terms ) ) :
                             foreach ( $terms as $term ) { ?>
-                    <button class="button" data-filter=".<?php echo  strtolower(preg_replace('/[^a-zA-Z]+/', '-', $term->slug)); ?>"><?php echo esc_html($term->name); ?></button>
+                    <button class="button" data-filter=".<?php echo esc_attr( strtolower(preg_replace('/[^a-zA-Z]+/', '-', $term->slug))); ?>"><?php echo esc_html($term->name); ?></button>
                     <?php } endif; endif; ?>
 
                 </div>
@@ -586,7 +586,7 @@ class Ele_Blog_Style_Seven extends Widget_Base {
                  $terms = get_the_terms( get_the_ID(), 'category' );
                 ?>
                 <article 
-                class="<?php foreach ($terms as $term){ echo strtolower(preg_replace('/[^a-zA-Z]+/', '-', $term->slug )).' '; } ?>">
+                class="<?php foreach ($terms as $term){ echo esc_attr( strtolower(preg_replace('/[^a-zA-Z]+/', '-', $term->slug )) ).' '; } ?>">
                     <div class="eblog-single-inner style-4">
                         <div class="eblog-single-inner-wrap">
                             <?php if( has_post_thumbnail() ) : ?>
@@ -613,7 +613,7 @@ class Ele_Blog_Style_Seven extends Widget_Base {
                                   the_title();
 
                                   else :
-                                    echo wp_trim_words( get_the_title(), $settings[ 'title_excerpt_length' ], '' );
+                                    echo esc_html( wp_trim_words( get_the_title(), $settings[ 'title_excerpt_length' ], '' ) );
                                  endif;
                                  ?>
 
@@ -626,7 +626,7 @@ class Ele_Blog_Style_Seven extends Widget_Base {
 
                               //check if excerpt enable
                               if( 'excerpt' == $settings[ 'dcontent' ] ) : ?>
-                                <p><?php echo wp_trim_words( get_the_content(), $settings[ 'excerpt_length'] , '' ); ?></p>
+                                <p><?php echo wp_kses_post( wp_trim_words( get_the_content(), $settings[ 'excerpt_length'] , '' ) ); ?></p>
                               <?php else : 
                                 the_content();
                                endif;

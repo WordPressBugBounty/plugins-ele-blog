@@ -3,14 +3,14 @@ Contributors:smarettheme
 Donate link: https://solverwp.com/
 Tags: post carousel, post grid, elementor post slider, elementor magazine
 Requires at least: 5.0.1
-Tested up to: 6.6
-Stable tag: 1.7
+Tested up to: 6.9
+Stable tag: 1.9
 Requires PHP: 5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
-Eleblog is an ultimate posts addon or element pack for the Elementor page builder. You can display the blog posts on the WordPress web site the way you want.
+Eleblog is an ultimate posts addon or element pack for the Elementor page builder. You can display the blog posts on the WordPress web site the way...
 
 == Description ==
 

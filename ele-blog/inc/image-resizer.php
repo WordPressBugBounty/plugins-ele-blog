@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Title         : Aqua Resizer
  * Description   : Resizes WordPress images on the fly
@@ -175,7 +179,7 @@ if(!class_exists('Ele_Blog_Img_Resize')) {
                 return $image;
             }
             catch (Exception $ex) {
-                error_log( $ex->getMessage());
+                error_log( $ex->getMessage()); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
                 if ($this->throwOnError) {
                     // Bubble up exception.

@@ -225,7 +225,7 @@ class Ele_Blog_Style_Six extends Widget_Base {
         $this->add_control(
             'important_note',
             [
-                'label' => __( '', 'ele-blog' ),
+                'label' => '',
                 'type' => \Elementor\Controls_Manager::RAW_HTML,
                 'raw' => '<br/>For More Style And Features Lke Magazine, Ajax pagination, Video grid, Video Popup, trending post and more 13+ addons <br/>
                 <br/><a target="_blank" href="https://1.envato.market/ele-blog">Go Pro</a>
@@ -365,7 +365,7 @@ class Ele_Blog_Style_Six extends Widget_Base {
                               the_title();
 
                               else :
-                                echo wp_trim_words( get_the_title(), $settings[ 'title_excerpt_length' ], '' );
+                                echo esc_html( wp_trim_words( get_the_title(), $settings[ 'title_excerpt_length' ], '' ) );
                              endif;
                              ?>
                                 

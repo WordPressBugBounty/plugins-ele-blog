@@ -427,7 +427,7 @@ class Ele_Blog_Style_One extends Widget_Base {
         $this->add_control(
             'pagination_note',
             [
-                'label' => __( '', 'ele-blog' ),
+                'label' => '',
                 'type' => \Elementor\Controls_Manager::RAW_HTML,
                 'raw' => 'Ajax Pagination ( Without Loading Page ) Available On <a target="_blank" href="https://1.envato.market/ele-blog">Go Pro</a><br/>
                 <a target="_blank" href="https://solverwp.com/demo/wp/ele-blog/ajax-pagination/">See Demo</a>',
@@ -448,7 +448,7 @@ class Ele_Blog_Style_One extends Widget_Base {
         $this->add_control(
             'important_note',
             [
-                'label' => __( '', 'ele-blog' ),
+                'label' => '',
                 'type' => \Elementor\Controls_Manager::RAW_HTML,
                 'raw' => '<br/>For More Style And Features Lke Magazine, Ajax pagination and more 13+ addons  <br/>
                 <br/><a target="_blank" href="https://1.envato.market/ele-blog">Go Pro</a>
@@ -815,7 +815,7 @@ class Ele_Blog_Style_One extends Widget_Base {
                                       the_title();
 
                                       else :
-                                        echo wp_trim_words( get_the_title(), $settings[ 'title_excerpt_length' ], '' );
+                                        echo esc_html( wp_trim_words( get_the_title(), $settings[ 'title_excerpt_length' ], '' ) );
                                      endif;
                                      ?>
                                         
@@ -852,7 +852,7 @@ class Ele_Blog_Style_One extends Widget_Base {
 
                                   //check if excerpt enable
                                   if( 'excerpt' == $settings[ 'dcontent' ] ) : ?>
-                                    <p><?php echo wp_trim_words( get_the_content(), $settings[ 'excerpt_length'] , '' ); ?></p>
+                                    <p><?php echo wp_kses_post( wp_trim_words( get_the_content(), $settings[ 'excerpt_length'] , '' ) ); ?></p>
                                   <?php else : 
                                     the_content();
                                    endif;

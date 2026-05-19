@@ -147,7 +147,7 @@ final class Ele_Blog_Elementor_Widgets_Init {
 	 */
 	public function admin_notice_missing_main_plugin() {
 
-		if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] );
+		if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$Check_ELementor = 'elementor/elementor.php';
 		$Is_Installed_Elementor = get_plugins();
@@ -159,6 +159,7 @@ final class Ele_Blog_Elementor_Widgets_Init {
 
 			$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $Check_ELementor . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $Check_ELementor );
 
+			/* translators: 1: Plugin name 2: Required plugin name */
 			$message = sprintf('<p>' . esc_html__( '"%1$s" requires "%2$s" to be activate.', 'ele-blog' ) . '</p>', '<strong>' . esc_html__( 'Eleblog ', 'ele-blog' ) . '</strong>', '<strong>' . esc_html__( 'Elementor', 'ele-blog' ) . '</strong>');
 
 			$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, __( 'Activate Elementor', 'ele-blog' ) ) . '</p>';
@@ -169,12 +170,13 @@ final class Ele_Blog_Elementor_Widgets_Init {
 
 			$install_url = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=elementor' ), 'install-plugin_elementor' );
 
+			/* translators: 1: Plugin name 2: Required plugin name */
 			$message = sprintf('<p>' . esc_html__( '"%1$s" requires "%2$s" to be install.', 'ele-blog' ) . '</p>', '<strong>' . esc_html__( 'Eleblog ', 'ele-blog' ) . '</strong>', '<strong>' . esc_html__( 'Elementor', 'ele-blog' ) . '</strong>');
 
 			$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, __( 'Install Elementor', 'ele-blog' ) ) . '</p>';
 		}
 
-		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses_post( $message ) );
 
 	}
 
@@ -189,7 +191,7 @@ final class Ele_Blog_Elementor_Widgets_Init {
 	 */
 	public function admin_notice_minimum_elementor_version() {
 
-		if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] );
+		if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$message = sprintf(
 			/* translators: 1: Plugin name 2: Elementor 3: Required Elementor version */
@@ -199,7 +201,7 @@ final class Ele_Blog_Elementor_Widgets_Init {
 			 self::MINIMUM_ELEMENTOR_VERSION
 		);
 
-		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses_post( $message ) );
 
 	}
 
@@ -214,7 +216,7 @@ final class Ele_Blog_Elementor_Widgets_Init {
 	 */
 	public function admin_notice_minimum_php_version() {
 
-		if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] );
+		if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$message = sprintf(
 			/* translators: 1: Plugin name 2: PHP 3: Required PHP version */
@@ -224,7 +226,7 @@ final class Ele_Blog_Elementor_Widgets_Init {
 			 self::MINIMUM_PHP_VERSION
 		);
 
-		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+		printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses_post( $message ) );
 
 	}
 

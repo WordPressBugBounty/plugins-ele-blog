@@ -9,11 +9,11 @@
  * @license     GPL-2.0-or-later
  *
  * Plugin Name: Eleblog - Elementor Blog And Magazine Addons
- * Plugin URI:  https://solverwp.com/
+ * Plugin URI:  https://wordpress.org/plugins/ele-blog
  * Description: Ele blog is an ultimate posts addon or element pack for the Elementor page builder. You can display the blog posts on the WordPress web site the way you want.
- * Version:     1.8
- * Author:      solverwp.com
- * Author URI:  https://1.envato.market/mgODEX
+ * Version:     1.9
+ * Author:      smarettheme
+ * Author URI:  https://profiles.wordpress.org/smarettheme/
  * Text Domain: ele-blog
  * License:     GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -43,21 +43,7 @@ define('ELE_BLOG_ELEMENTOR', ELE_BLOG_ROOT_PATH . '/elementor');
 
 
 /** Plugin version **/
-define('ELE_BLOG_VERSION', '1.0.0');
-
-
-
-/**
- * Load plugin textdomain.
- */
-add_action('plugins_loaded', 'ele_blog_textdomain');
-if (!function_exists('ele_blog_textdomain')) {
-
-  function ele_blog_textdomain()
-  {
-    load_plugin_textdomain('ele-blog', false, plugin_basename(dirname(__FILE__)) . '/language');
-  }
-}
+define('ELE_BLOG_VERSION', '1.9');
 
 
 /*
@@ -95,22 +81,25 @@ register_activation_hook(__FILE__,  'eleblog_activation');
 
 function eleblog_activation()
 {
-  update_option("eleblog_active_date", date('Y-m-d h:i:s'));
+  update_option("eleblog_active_date", gmdate('Y-m-d H:i:s'));
 }
 
 
-function swp_eleblog_notice()
+function eleblog_swp_notice()
 {
   $user_id = get_current_user_id();
-  if (!get_user_meta($user_id, 'swp_eleblog_notice_dismissed'))
-    echo '<div class="notice-success notice"><h3><a target="_blank" style="text-decoration: none;line-height: 20px;color: #3c434a;font-size:13px" href="https://1.envato.market/ele-blog"  >Go Pro <span style="font-size:15px;color:blue; text-decoration:underline">$16.50</span></a><a style="text-decoration:none;float:right" href="?swp_eleblog-dismissed"><span class="dashicons dashicons-no"></span></a></h3></div>';
+  if (!get_user_meta($user_id, 'swp_eleblog_notice_dismissed')) {
+    $dismiss_url = wp_nonce_url(add_query_arg('swp_eleblog-dismissed', '1'), 'eleblog_swp_dismiss_' . $user_id);
+    echo '<div class="notice-success notice"><h3><a target="_blank" style="text-decoration: none;line-height: 20px;color: #3c434a;font-size:13px" href="https://1.envato.market/ele-blog"  >Go Pro <span style="font-size:15px;color:blue; text-decoration:underline">$16.50</span></a><a style="text-decoration:none;float:right" href="' . esc_url($dismiss_url) . '"><span class="dashicons dashicons-no"></span></a></h3></div>';
+  }
 }
-add_action('admin_notices', 'swp_eleblog_notice');
+add_action('admin_notices', 'eleblog_swp_notice');
 
-function swp_eleblog_notice_dismissed()
+function eleblog_swp_notice_dismissed()
 {
   $user_id = get_current_user_id();
-  if (isset($_GET['swp_eleblog-dismissed']))
+  if (isset($_GET['swp_eleblog-dismissed']) && isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'eleblog_swp_dismiss_' . $user_id)) {
     add_user_meta($user_id, 'swp_eleblog_notice_dismissed', 'true', true);
+  }
 }
-add_action('admin_init', 'swp_eleblog_notice_dismissed');
+add_action('admin_init', 'eleblog_swp_notice_dismissed');
